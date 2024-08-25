@@ -1,5 +1,6 @@
 class DashboardController < ApplicationController
   before_action :require_login
+  layout 'sb_admin_2'
 
   layout false
 
