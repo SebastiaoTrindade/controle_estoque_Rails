@@ -1,213 +1,142 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard de Controle de Estoque</title>
+    <title>Dashboard - Controle de Estoque</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
-    <style>
-        .pdv-container {
-            background-color: #e6f3ff;
-            padding: 20px;
-            border-radius: 10px;
-        }
-        .pdv-title {
-            background-color: #00a0e4;
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
-            font-size: 1.5em;
-        }
-        .pdv-receipt {
-            background-color: white;
-            border: 1px dashed #333;
-            padding: 10px;
-            margin-top: 10px;
-            height: 180px;
-        }
-        .pdv-summary {
-            background-color: #0085c8;
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            font-size: 1.8em;
-        }
-        .pdv-actions {
-            margin-top: 10px;
-        }
-        .pdv-actions button {
-            width: 100%;
-            margin-bottom: 5px;
-        }
-        .pdv-input-group {
-            margin-bottom: 10px;
-        }
-    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <%= stylesheet_link_tag 'dashboard', media: 'all' %>
+        
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Controle de Estoque</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Dashboard</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Estoque</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Relatórios</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Configurações</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Vendas</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-person-circle"></i> Usuário Logado
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                        <li><a class="dropdown-item" href="#">Perfil</a></li>
-                        <li><a class="dropdown-item" href="#">Configurações</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li>
-                            <%= link_to "Logout", logout_path, method: :delete, class: "dropdown-item", data: { confirm: "Tem certeza que deseja sair?" } %>
-                        </li>                        
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </nav>
 
-    <div class="container-fluid mt-4">
-        <div class="row">
-            <!-- Sidebar -->
-            <div class="col-md-2 bg-light">
-                <h4 class="pt-3">Menu</h4>
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">Visão Geral</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Produtos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Categorias</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Fornecedores</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Relatórios</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Vendas</a>
-                    </li>
-                </ul>
+<div id="wrapper">
+    <!-- Sidebar -->
+    <div id="sidebar">
+        <div class="sidebar-heading">Sistema</div>
+        <a href="#" class="active"><i class="fas fa-fw fa-tachometer-alt"></i> Dashboard</a>
+        <a href="#"><i class="fas fa-fw fa-cash-register"></i> PDV de Vendas</a>
+        <a href="#"><i class="fas fa-fw fa-boxes"></i> Controle de Estoque</a>
+        <a href="#"><i class="fas fa-fw fa-user"></i> Usuários</a>
+        <a href="#"><i class="fa-solid fa-dolly"></i> Produtos</a>
+        <a href="#"><i class="fa-solid fa-users"></i> Fornecedores</a>
+        <%= link_to logout_path, method: :delete, data: { confirm: "Tem certeza que deseja sair?" }, class: 'd-flex align-items-center' do %>
+            <i class="fas fa-fw fa-sign-out-alt"></i>
+            <span class="ms-2">Logout</span>
+        <% end %>          
+        
+    </div>
+
+    <!-- Content -->
+    <div id="content">
+        <div class="content-header">            
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Pesquisar...">
+            </div>
+            <div class="user-info">
+                <i class="fas fa-user-circle"></i>
+                <span><%= current_user.email %></span> <!-- Exibe o nome do usuário logado -->
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Earnings (Monthly)</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">R$ 40,00</div>
+                    </div>
+                </div>
             </div>
 
-            <!-- Main Content -->
-            <div class="col-md-10">
-                <h2 class="mb-4">Dashboard</h2>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Earnings (Annual)</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">R$ 215.000,00</div>
+                    </div>
+                </div>
+            </div>
 
-                <!-- Cards -->
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="card text-white bg-primary mb-3">
-                            <div class="card-header">Produtos em Estoque</div>
-                            <div class="card-body">
-                                <h5 class="card-title">1500</h5>
-                                <p class="card-text">Total de produtos disponíveis em estoque.</p>
-                            </div>
-                        </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">50%</div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="card text-white bg-success mb-3">
-                            <div class="card-header">Produtos Vendidos</div>
-                            <div class="card-body">
-                                <h5 class="card-title">750</h5>
-                                <p class="card-text">Total de produtos vendidos.</p>
-                            </div>
-                        </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Pending Requests</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="card text-white bg-warning mb-3">
-                            <div class="card-header">Estoque Baixo</div>
-                            <div class="card-body">
-                                <h5 class="card-title">50</h5>
-                                <p class="card-text">Produtos com estoque abaixo do limite.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="card text-white bg-danger mb-3">
-                            <div class="card-header">Produtos Esgotados</div>
-                            <div class="card-body">
-                                <h5 class="card-title">20</h5>
-                                <p class="card-text">Produtos atualmente esgotados.</p>
-                            </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Earnings Overview and Revenue Sources -->
+        <div class="row">
+            <div class="col-lg-8 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Earnings Overview</h5>
+                        <div class="chart-area">
+                            <!-- Gráfico de Earnings Overview -->
+                            <canvas id="earningsChart"></canvas>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Table -->
-                <div class="card mb-4">
-                    <div class="card-header">
-                        Produtos Recentemente Adicionados
-                    </div>
+            <div class="col-lg-4 mb-4">
+                <div class="card">
                     <div class="card-body">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th scope="col">ID</th>
-                                    <th scope="col">Nome</th>
-                                    <th scope="col">Categoria</th>
-                                    <th scope="col">Quantidade</th>
-                                    <th scope="col">Preço</th>
-                                    <th scope="col">Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Produto A</td>
-                                    <td>Categoria 1</td>
-                                    <td>500</td>
-                                    <td>R$ 10,00</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-primary">Editar</button>
-                                        <button class="btn btn-sm btn-danger">Excluir</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Produto B</td>
-                                    <td>Categoria 2</td>
-                                    <td>300</td>
-                                    <td>R$ 15,00</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-primary">Editar</button>
-                                        <button class="btn btn-sm btn-danger">Excluir</button>
-                                    </td>
-                                </tr>
-                                <!-- Adicione mais produtos conforme necessário -->
-                            </tbody>
-                        </table>
+                        <h5 class="card-title">Revenue Sources</h5>
+                        <div class="chart-pie">
+                            <!-- Gráfico de Revenue Sources -->
+                            <canvas id="revenueChart"></canvas>
+                        </div>
                     </div>
-                </div>                
+                </div>
             </div>
         </div>
     </div>
+</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var ctx1 = document.getElementById('earningsChart').getContext('2d');
+    var earningsChart = new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            datasets: [{
+                label: 'Earnings',
+                data: [10000, 20000, 30000, 40000, 50000, 60000, 70000],
+                borderColor: '#4e73df',
+                backgroundColor: 'rgba(78, 115, 223, 0.1)',
+                fill: true,
+            }]
+        }
+    });
+
+    var ctx2 = document.getElementById('revenueChart').getContext('2d');
+    var revenueChart = new Chart(ctx2, {
+        type: 'pie',
+        data: {
+            labels: ['Direct', 'Social', 'Referral'],
+            datasets: [{
+                data: [55, 30, 15],
+                backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
+            }]
+        }
+    });
+</script>
 </body>
 </html>
